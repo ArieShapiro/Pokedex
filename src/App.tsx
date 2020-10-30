@@ -2,33 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { getData } from './service/service';
 import TopBar from './components/TopBar';
 import DeatailsDialog from './components/DetailsDialog';
+import PokemonsList from './components/PokemonsList';
 import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import NavSection from './components/NavSection';
-import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
 	root: {
 		margin: 'auto',
 		width: '100%',
 		minHeight: '101vh',
-	},
-
-	list: {
-		width: '70%',
-		margin: 'auto',
-	},
-	listItem: {
-		margin: '5px 0',
-		boxShadow: '1px 1px #888888',
-		border: 'solid 1px #888888',
-		borderRadius: '5px',
 	},
 	spinner: {
 		margin: 'auto',
@@ -90,27 +73,7 @@ function App() {
 
 			<NavSection state={state} goToPrev={goToPrev} goToNext={goToNext} />
 
-			{state ? (
-				<List className={classes.list}>
-					{state.pokemons.map((p: PokemonDetails) => (
-						<ListItem className={classes.listItem} key={p.orderNumber}>
-							<ListItemAvatar>
-								<Avatar src={p.picture} />
-							</ListItemAvatar>
-							<ListItemText primary={p.name.toUpperCase()} />
-							<ListItemSecondaryAction>
-								<Button
-									onClick={() => {
-										showDetails(p);
-									}}
-								>
-									View Details
-								</Button>
-							</ListItemSecondaryAction>
-						</ListItem>
-					))}
-				</List>
-			) : null}
+			<PokemonsList state={state} showDetails={showDetails} />
 
 			<DeatailsDialog dialogData={dialogData} dialog={dialog} setDialog={setDialog} />
 		</div>
